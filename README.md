@@ -4,7 +4,9 @@ Welcome to my personal portfolio repository! I am a multi-disciplinary software 
 
 ## 🚀 Live Demo
 Once deployed, the live website will be accessible at:
-👉 **[https://nandkumarcoder.github.io/nand-kumar-portfolio/](https://nandkumarcoder.github.io/nand-kumar-portfolio/)**
+👉 **old : [https://nandkumarcoder.github.io/nand-kumar-portfolio/](https://nandkumarcoder.github.io/nand-kumar-portfolio/)** 
+👉 **new Onging : [https://nandkumarcoder.github.io/nand-kumar-portfolio/]((http://192.168.1.103:4174/))**
+ 
 
 ---
 
