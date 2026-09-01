@@ -26,7 +26,7 @@ const Contact = () => {
 
     try {
       // 1. Send to Backend API
-      const backendRes = await fetch('http://localhost:5000/api/contact', {
+      const backendRes = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, accessKey: WEB3FORMS_KEY })

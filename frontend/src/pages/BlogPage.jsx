@@ -18,7 +18,7 @@ const BlogPage = () => {
 
   const fetchBlogs = (queryStr = search) => {
     setLoading(true);
-    let url = `http://localhost:5000/api/blogs?category=${encodeURIComponent(selectedCat)}`;
+    let url = `/api/blogs?category=${encodeURIComponent(selectedCat)}`;
     if (queryStr) {
       url += `&search=${encodeURIComponent(queryStr)}`;
     }

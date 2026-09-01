@@ -32,7 +32,7 @@ const DashboardPage = () => {
   }, [user]);
 
   const fetchBlogs = () => {
-    fetch('http://localhost:5000/api/blogs')
+    fetch('/api/blogs')
       .then(res => res.json())
       .then(data => {
         const userBlogs = data.blogs.filter(b => b.authorId === user.id || user.role === 'admin');
@@ -71,7 +71,7 @@ const DashboardPage = () => {
     if (!window.confirm('Are you sure you want to delete this blog article?')) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/blogs/${blogId}`, {
+      const res = await fetch(`/api/blogs/${blogId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -88,8 +88,8 @@ const DashboardPage = () => {
     setFormMsg({ type: '', text: '' });
 
     const url = editingBlogId
-      ? `http://localhost:5000/api/blogs/${editingBlogId}`
-      : 'http://localhost:5000/api/blogs';
+      ? `/api/blogs/${editingBlogId}`
+      : '/api/blogs';
     const method = editingBlogId ? 'PUT' : 'POST';
 
     try {

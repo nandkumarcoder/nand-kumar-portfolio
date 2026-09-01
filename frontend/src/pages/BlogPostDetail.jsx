@@ -11,7 +11,7 @@ const BlogPostDetail = () => {
   const [commentStatus, setCommentStatus] = useState('');
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/blogs/${idOrSlug}`)
+    fetch(`/api/blogs/${idOrSlug}`)
       .then(res => res.json())
       .then(data => {
         if (data.blog) {
@@ -25,7 +25,7 @@ const BlogPostDetail = () => {
 
   const handleLike = () => {
     if (!blog) return;
-    fetch(`http://localhost:5000/api/blogs/${blog.id}/like`, { method: 'POST' })
+    fetch(`/api/blogs/${blog.id}/like`, { method: 'POST' })
       .then(res => res.json())
       .then(data => {
         if (data.likes !== undefined) setLikes(data.likes);
@@ -36,7 +36,7 @@ const BlogPostDetail = () => {
     e.preventDefault();
     if (!commentForm.userName || !commentForm.comment) return;
 
-    fetch(`http://localhost:5000/api/blogs/${blog.id}/comments`, {
+    fetch(`/api/blogs/${blog.id}/comments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(commentForm)

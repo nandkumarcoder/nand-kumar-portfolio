@@ -82,7 +82,7 @@ const Projects = () => {
   const [projects, setProjects] = useState(initialProjects);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/projects?category=${filter}`)
+    fetch(`/api/projects?category=${filter}`)
       .then(res => res.json())
       .then(data => {
         if (data.projects && data.projects.length > 0) {
