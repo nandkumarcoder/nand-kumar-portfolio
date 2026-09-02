@@ -19,3 +19,5 @@ services:
         generateValue: true
       - key: FRONTEND_URL
         value: https://nandkumarcoder.github.io
+      - key: MONGODB_URI
+        value: mongodb+srv://nandkumarcoder_db_user:EJxcCz9pMAPs5AXv@cluster0.ejsekfa.mongodb.net/portfolio?retryWrites=true&w=majority&appName=Cluster0
