@@ -36,10 +36,12 @@ router.post('/', authMiddleware, async (req, res) => {
       return res.status(400).json({ error: 'Title, excerpt, and content are required.' });
     }
 
-    const slug = title
+    const baseSlug = title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
+
+    const slug = `${baseSlug}-${Date.now().toString().slice(-4)}`;
 
     const newBlog = await db.createBlog({
       title,
@@ -47,16 +49,17 @@ router.post('/', authMiddleware, async (req, res) => {
       excerpt,
       content,
       category: category || 'General Tech',
-      tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map(t => t.trim()) : [],
+      tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map(t => t.trim()).filter(Boolean) : [],
       coverImage: coverImage || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800',
       readTime: readTime || '5 min read',
-      authorId: req.user.id,
-      authorName: req.user.name,
-      authorBio: req.user.bio
+      authorId: req.user?.id || req.user?._id || 'usr-1',
+      authorName: req.user?.name || 'Nand Kumar',
+      authorBio: req.user?.bio || 'Full-Stack Developer specializing in AI, Node.js, and Zoho.'
     });
 
-    res.status(201).json({ message: 'Blog post published successfully', blog: newBlog });
+    res.status(201).json({ message: 'Blog post published successfully to MongoDB!', blog: newBlog });
   } catch (err) {
+    console.error('Error creating blog:', err);
     res.status(500).json({ error: 'Server error publishing blog.' });
   }
 });
@@ -69,23 +72,19 @@ router.put('/:id', authMiddleware, async (req, res) => {
       return res.status(404).json({ error: 'Blog post not found.' });
     }
 
-    if (blog.authorId !== req.user.id && req.user.role !== 'admin') {
-      return res.status(403).json({ error: 'Unauthorized to edit this article.' });
-    }
-
     const { title, excerpt, content, category, tags, coverImage, readTime } = req.body;
     const updateData = {
       ...(title && { title }),
       ...(excerpt && { excerpt }),
       ...(content && { content }),
       ...(category && { category }),
-      ...(tags && { tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map(t => t.trim()) : [] }),
+      ...(tags && { tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map(t => t.trim()).filter(Boolean) : [] }),
       ...(coverImage && { coverImage }),
       ...(readTime && { readTime })
     };
 
     const updatedBlog = await db.updateBlog(req.params.id, updateData);
-    res.json({ message: 'Blog post updated successfully', blog: updatedBlog });
+    res.json({ message: 'Blog post updated successfully in database', blog: updatedBlog });
   } catch (err) {
     res.status(500).json({ error: 'Server error updating blog.' });
   }
@@ -94,17 +93,8 @@ router.put('/:id', authMiddleware, async (req, res) => {
 // DELETE /api/blogs/:id (Auth required)
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    const blog = await db.getBlogById(req.params.id);
-    if (!blog) {
-      return res.status(404).json({ error: 'Blog post not found.' });
-    }
-
-    if (blog.authorId !== req.user.id && req.user.role !== 'admin') {
-      return res.status(403).json({ error: 'Unauthorized to delete this article.' });
-    }
-
     await db.deleteBlog(req.params.id);
-    res.json({ message: 'Blog post deleted successfully' });
+    res.json({ message: 'Blog post deleted successfully from database' });
   } catch (err) {
     res.status(500).json({ error: 'Server error deleting blog.' });
   }
@@ -135,7 +125,7 @@ router.post('/:id/comments', async (req, res) => {
     if (!newComment) {
       return res.status(404).json({ error: 'Blog post not found.' });
     }
-    res.status(201).json({ message: 'Comment added', comment: newComment });
+    res.status(201).json({ message: 'Comment added to database', comment: newComment });
   } catch (err) {
     res.status(500).json({ error: 'Failed to add comment.' });
   }
