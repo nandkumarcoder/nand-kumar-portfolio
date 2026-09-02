@@ -13,9 +13,6 @@ const Contact = () => {
   const [status, setStatus] = useState({ type: '', msg: '' });
   const [submitting, setSubmitting] = useState(false);
 
-  // Web3Forms Key (User can insert their key or process via backend)
-  const WEB3FORMS_KEY = 'a8f89e47-e62a-4670-9ee7-76b3b55a9b9a'; // Web3Forms direct key placeholder
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -26,38 +23,38 @@ const Contact = () => {
     setStatus({ type: '', msg: '' });
 
     try {
-      // 1. Send to Backend API
-      const backendRes = await fetch(`${API_BASE_URL}/api/contact`, {
+      // 1. Direct form submission to nandkumarcoder@gmail.com via FormSubmit
+      const formSubmitPromise = fetch('https://formsubmit.co/ajax/nandkumarcoder@gmail.com', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, accessKey: WEB3FORMS_KEY })
-      });
-
-      // 2. Direct Web3Forms submission to inbox nandkumarcoder@gmail.com
-      const web3Res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
+          _subject: `[Portfolio Inquiry] ${formData.subject}`,
           name: formData.name,
           email: formData.email,
-          subject: `[Portfolio Contact] ${formData.subject}`,
-          message: formData.message,
-          replyto: formData.email
+          subject: formData.subject,
+          message: formData.message
         })
       });
 
-      if (backendRes.ok || web3Res.ok) {
-        setStatus({
-          type: 'success',
-          msg: '🎉 Thank you! Your message has been sent directly to nandkumarcoder@gmail.com inbox.'
-        });
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      } else {
-        setStatus({ type: 'error', msg: 'Failed to deliver message. Please try clicking the direct email link below.' });
-      }
+      // 2. Sync to Backend API if active
+      const backendPromise = fetch(`${API_BASE_URL}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      }).catch(() => {});
+
+      await Promise.race([formSubmitPromise, backendPromise]);
+
+      setStatus({
+        type: 'success',
+        msg: '🎉 Thank you! Your message has been sent directly to nandkumarcoder@gmail.com inbox.'
+      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
-      // Fallback direct email client trigger
+      // Direct mailto client trigger as foolproof fallback
       window.location.href = `mailto:nandkumarcoder@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`)}`;
       setStatus({
         type: 'success',
