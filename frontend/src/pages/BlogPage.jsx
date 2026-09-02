@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Clock, ThumbsUp, PlusCircle, BookOpen } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
+import API_BASE_URL from '../config/api';
 
 const categories = ['All', 'AI & Data Science', 'Web & Node.js Dev', 'Zoho & Automation', 'General Tech'];
 
@@ -18,7 +19,7 @@ const BlogPage = () => {
 
   const fetchBlogs = (queryStr = search) => {
     setLoading(true);
-    let url = `/api/blogs?category=${encodeURIComponent(selectedCat)}`;
+    let url = `${API_BASE_URL}/api/blogs?category=${encodeURIComponent(selectedCat)}`;
     if (queryStr) {
       url += `&search=${encodeURIComponent(queryStr)}`;
     }

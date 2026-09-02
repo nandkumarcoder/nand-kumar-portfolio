@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { PlusCircle, Trash2, Edit3, BookOpen, UserCheck, Image, FileText } from 'lucide-react';
+import API_BASE_URL from '../config/api';
 
 const DashboardPage = () => {
   const { user, token, logout } = useContext(AuthContext);
@@ -32,7 +33,7 @@ const DashboardPage = () => {
   }, [user]);
 
   const fetchBlogs = () => {
-    fetch('/api/blogs')
+    fetch(`${API_BASE_URL}/api/blogs`)
       .then(res => res.json())
       .then(data => {
         const userBlogs = data.blogs.filter(b => b.authorId === user.id || user.role === 'admin');
@@ -71,7 +72,7 @@ const DashboardPage = () => {
     if (!window.confirm('Are you sure you want to delete this blog article?')) return;
 
     try {
-      const res = await fetch(`/api/blogs/${blogId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/blogs/${blogId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -88,8 +89,8 @@ const DashboardPage = () => {
     setFormMsg({ type: '', text: '' });
 
     const url = editingBlogId
-      ? `/api/blogs/${editingBlogId}`
-      : '/api/blogs';
+      ? `${API_BASE_URL}/api/blogs/${editingBlogId}`
+      : `${API_BASE_URL}/api/blogs`;
     const method = editingBlogId ? 'PUT' : 'POST';
 
     try {

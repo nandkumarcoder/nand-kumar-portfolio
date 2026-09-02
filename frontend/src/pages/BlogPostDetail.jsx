@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Clock, ThumbsUp, MessageSquare, Send, Calendar } from 'lucide-react';
+import API_BASE_URL from '../config/api';
 
 const BlogPostDetail = () => {
   const { idOrSlug } = useParams();
@@ -11,7 +12,7 @@ const BlogPostDetail = () => {
   const [commentStatus, setCommentStatus] = useState('');
 
   useEffect(() => {
-    fetch(`/api/blogs/${idOrSlug}`)
+    fetch(`${API_BASE_URL}/api/blogs/${idOrSlug}`)
       .then(res => res.json())
       .then(data => {
         if (data.blog) {
@@ -25,7 +26,7 @@ const BlogPostDetail = () => {
 
   const handleLike = () => {
     if (!blog) return;
-    fetch(`/api/blogs/${blog.id}/like`, { method: 'POST' })
+    fetch(`${API_BASE_URL}/api/blogs/${blog.id}/like`, { method: 'POST' })
       .then(res => res.json())
       .then(data => {
         if (data.likes !== undefined) setLikes(data.likes);
@@ -36,7 +37,7 @@ const BlogPostDetail = () => {
     e.preventDefault();
     if (!commentForm.userName || !commentForm.comment) return;
 
-    fetch(`/api/blogs/${blog.id}/comments`, {
+    fetch(`${API_BASE_URL}/api/blogs/${blog.id}/comments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(commentForm)

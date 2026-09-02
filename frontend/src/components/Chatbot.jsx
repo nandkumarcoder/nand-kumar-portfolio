@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Bot } from 'lucide-react';
+import API_BASE_URL from '../config/api';
 
 const presetChips = [
   'Tell me about Zoho',
@@ -39,7 +40,7 @@ const Chatbot = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/chatbot', {
+      const res = await fetch(`${API_BASE_URL}/api/chatbot`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: q })

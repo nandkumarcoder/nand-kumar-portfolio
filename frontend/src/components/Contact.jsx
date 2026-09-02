@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, MapPin, Send, CheckCircle2, ExternalLink } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
+import API_BASE_URL from '../config/api';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ const Contact = () => {
 
     try {
       // 1. Send to Backend API
-      const backendRes = await fetch('/api/contact', {
+      const backendRes = await fetch(`${API_BASE_URL}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, accessKey: WEB3FORMS_KEY })
