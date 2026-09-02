@@ -12,11 +12,14 @@ import BlogPostDetail from './pages/BlogPostDetail';
 import SignInPage from './pages/SignInPage';
 import DashboardPage from './pages/DashboardPage';
 
+// Use basename for GitHub Pages deployment (sub-path routing)
+const basename = import.meta.env.MODE === 'production' ? '/nand-kumar-portfolio' : '/';
+
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <Router>
+        <Router basename={basename}>
           <div className="app-wrapper">
             <ParticleBackground />
             <Navbar />
