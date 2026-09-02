@@ -47,6 +47,15 @@ const db = {
     return data.users.find(u => u.id === id);
   },
 
+  async getAllUsers() {
+    if (mongoose.connection.readyState === 1) {
+      const User = require('../models/User');
+      return await User.find({}, { password: 0 }).sort({ createdAt: -1 });
+    }
+    const data = loadLocalDB();
+    return (data.users || []).map(({ password, ...u }) => u);
+  },
+
   async createUser(userData) {
     if (mongoose.connection.readyState === 1) {
       const User = require('../models/User');

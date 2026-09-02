@@ -110,9 +110,16 @@ router.get('/me', authMiddleware, async (req, res) => {
       avatar: user.avatar,
       bio: user.bio
     };
-    res.json({ user: safeUser });
+// GET /api/auth/users (Admin only)
+router.get('/users', authMiddleware, async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'Admin access required.' });
+    }
+    const users = await db.getAllUsers();
+    res.json({ users });
   } catch (err) {
-    res.status(500).json({ error: 'Server error fetching user.' });
+    res.status(500).json({ error: 'Failed to fetch registered users.' });
   }
 });
 
