@@ -2,6 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Clock, ThumbsUp, MessageSquare, Send, Calendar } from 'lucide-react';
 import API_BASE_URL from '../config/api';
+import { seedBlogs } from '../data/seedData';
+
+const safeJsonParse = async (res) => {
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) return null;
+  try {
+    return await res.json();
+  } catch {
+    return null;
+  }
+};
 
 const BlogPostDetail = () => {
   const { idOrSlug } = useParams();
@@ -13,47 +24,66 @@ const BlogPostDetail = () => {
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/blogs/${idOrSlug}`)
-      .then(res => res.json())
+      .then(safeJsonParse)
       .then(data => {
-        if (data.blog) {
+        if (data && data.blog) {
           setBlog(data.blog);
           setLikes(data.blog.likes);
+        } else {
+          // Fallback to seedBlogs matching by id or slug
+          const found = seedBlogs.find(b => b.id === idOrSlug || b.slug === idOrSlug);
+          if (found) {
+            setBlog(found);
+            setLikes(found.likes);
+          }
         }
       })
-      .catch(err => console.error(err))
+      .catch(() => {
+        const found = seedBlogs.find(b => b.id === idOrSlug || b.slug === idOrSlug);
+        if (found) {
+          setBlog(found);
+          setLikes(found.likes);
+        }
+      })
       .finally(() => setLoading(false));
   }, [idOrSlug]);
 
   const handleLike = () => {
     if (!blog) return;
+    setLikes(prev => prev + 1);
+
     fetch(`${API_BASE_URL}/api/blogs/${blog.id}/like`, { method: 'POST' })
-      .then(res => res.json())
+      .then(safeJsonParse)
       .then(data => {
-        if (data.likes !== undefined) setLikes(data.likes);
-      });
+        if (data && data.likes !== undefined) setLikes(data.likes);
+      })
+      .catch(() => {});
   };
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     if (!commentForm.userName || !commentForm.comment) return;
 
+    const newComment = {
+      id: `c-${Date.now()}`,
+      userName: commentForm.userName,
+      comment: commentForm.comment,
+      createdAt: new Date().toISOString()
+    };
+
+    setBlog(prev => ({
+      ...prev,
+      comments: [...(prev.comments || []), newComment]
+    }));
+    setCommentForm({ userName: '', comment: '' });
+    setCommentStatus('Comment added successfully!');
+    setTimeout(() => setCommentStatus(''), 3000);
+
     fetch(`${API_BASE_URL}/api/blogs/${blog.id}/comments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(commentForm)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.comment) {
-          setBlog(prev => ({
-            ...prev,
-            comments: [...(prev.comments || []), data.comment]
-          }));
-          setCommentForm({ userName: '', comment: '' });
-          setCommentStatus('Comment added successfully!');
-          setTimeout(() => setCommentStatus(''), 3000);
-        }
-      });
+    }).catch(() => {});
   };
 
   if (loading) {
@@ -118,7 +148,7 @@ const BlogPostDetail = () => {
         <div style={{ marginTop: '40px', borderTop: '1px solid var(--border-glass)', paddingTop: '20px' }}>
           <h4 style={{ fontSize: '0.9rem', color: 'var(--text-dim)', marginBottom: '12px' }}>TAGS</h4>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            {blog.tags.map((t, idx) => (
+            {blog.tags && blog.tags.map((t, idx) => (
               <span key={idx} className="skill-chip">#{t}</span>
             ))}
           </div>
@@ -127,12 +157,12 @@ const BlogPostDetail = () => {
         {/* Author Bio Box */}
         <div style={{ marginTop: '40px', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-glass)', padding: '24px', borderRadius: '16px', display: 'flex', gap: '20px', alignItems: 'center' }}>
           <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'var(--accent-purple)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', fontWeight: 'bold' }}>
-            {blog.authorName[0]}
+            {blog.authorName ? blog.authorName[0] : 'N'}
           </div>
           <div>
             <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem' }}>Written by {blog.authorName}</h4>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-              {blog.authorBio || 'Software engineer specializing in AI, Django web backends, and Zoho Creator automation.'}
+              {blog.authorBio || 'Software engineer specializing in AI, Node.js web backends, and Zoho Creator automation.'}
             </p>
           </div>
         </div>

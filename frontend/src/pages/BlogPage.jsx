@@ -3,13 +3,24 @@ import { Link } from 'react-router-dom';
 import { Search, Clock, ThumbsUp, PlusCircle, BookOpen } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import API_BASE_URL from '../config/api';
+import { seedBlogs } from '../data/seedData';
 
 const categories = ['All', 'AI & Data Science', 'Web & Node.js Dev', 'Zoho & Automation', 'General Tech'];
 
+const safeJsonParse = async (res) => {
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) return null;
+  try {
+    return await res.json();
+  } catch {
+    return null;
+  }
+};
+
 const BlogPage = () => {
   const { user } = useContext(AuthContext);
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [blogs, setBlogs] = useState(seedBlogs);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [selectedCat, setSelectedCat] = useState('All');
 
@@ -25,11 +36,34 @@ const BlogPage = () => {
     }
 
     fetch(url)
-      .then(res => res.json())
+      .then(safeJsonParse)
       .then(data => {
-        setBlogs(data.blogs || []);
+        if (data && data.blogs && data.blogs.length > 0) {
+          setBlogs(data.blogs);
+        } else {
+          // Filter seedBlogs locally as fallback
+          let filtered = seedBlogs;
+          if (selectedCat !== 'All') {
+            filtered = filtered.filter(b => b.category === selectedCat);
+          }
+          if (queryStr) {
+            const q = queryStr.toLowerCase();
+            filtered = filtered.filter(b => b.title.toLowerCase().includes(q) || b.tags.some(t => t.toLowerCase().includes(q)));
+          }
+          setBlogs(filtered);
+        }
       })
-      .catch(err => console.error(err))
+      .catch(() => {
+        let filtered = seedBlogs;
+        if (selectedCat !== 'All') {
+          filtered = filtered.filter(b => b.category === selectedCat);
+        }
+        if (queryStr) {
+          const q = queryStr.toLowerCase();
+          filtered = filtered.filter(b => b.title.toLowerCase().includes(q) || b.tags.some(t => t.toLowerCase().includes(q)));
+        }
+        setBlogs(filtered);
+      })
       .finally(() => setLoading(false));
   };
 
@@ -89,7 +123,7 @@ const BlogPage = () => {
           Loading articles...
         </div>
       ) : blogs.length === 0 ? (
-        <div className="glass-panel" style={{ textCenter: 'center', padding: '60px' }}>
+        <div className="glass-panel" style={{ textAlign: 'center', padding: '60px' }}>
           <h3>No articles found</h3>
           <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>
             Try clearing your search terms or picking another category.
@@ -116,7 +150,7 @@ const BlogPage = () => {
 
                 <div className="blog-author">
                   <div className="author-avatar" style={{ background: 'var(--accent-purple)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
-                    {b.authorName[0]}
+                    {b.authorName ? b.authorName[0] : 'N'}
                   </div>
                   <div style={{ flex: 1 }}>
                     <div className="author-name">{b.authorName}</div>
