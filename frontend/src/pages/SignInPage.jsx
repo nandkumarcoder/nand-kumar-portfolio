@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import logoImg from '../assets/logo.png';
@@ -18,9 +18,11 @@ const SignInPage = () => {
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  if (user) {
-    navigate('/dashboard');
-  }
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,17 +46,18 @@ const SignInPage = () => {
   const handleDemoFill = (demoEmail, demoPass) => {
     setEmail(demoEmail);
     setPassword(demoPass);
+    setIsRegister(false);
   };
 
   return (
     <div className="section-container" style={{ paddingTop: '140px', maxWidth: '520px' }}>
       <div className="glass-panel" style={{ padding: '40px' }}>
-        <div style={{ textCenter: 'center', textAlign: 'center', marginBottom: '28px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <img
             src={logoImg}
             alt="Nand Kumar Logo"
             className="logo-img"
-            style={{ width: '64px', height: '64px', margin: '0 auto 16px' }}
+            style={{ width: '64px', height: '64px', margin: '0 auto 16px', borderRadius: '50%', objectFit: 'cover' }}
           />
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem' }}>
             {isRegister ? 'Blogger Registration' : 'Blogger Sign In'}
@@ -67,6 +70,7 @@ const SignInPage = () => {
         {/* Tab Toggle */}
         <div style={{ display: 'flex', background: 'rgba(255,255,255,0.04)', borderRadius: 'var(--radius-full)', padding: '4px', marginBottom: '24px' }}>
           <button
+            type="button"
             className={`btn ${!isRegister ? 'btn-primary' : ''}`}
             style={{ flex: 1, padding: '8px', fontSize: '0.85rem', borderRadius: 'var(--radius-full)', background: !isRegister ? '' : 'none', color: !isRegister ? '#fff' : 'var(--text-muted)' }}
             onClick={() => setIsRegister(false)}
@@ -74,6 +78,7 @@ const SignInPage = () => {
             <LogIn size={16} /> Sign In
           </button>
           <button
+            type="button"
             className={`btn ${isRegister ? 'btn-primary' : ''}`}
             style={{ flex: 1, padding: '8px', fontSize: '0.85rem', borderRadius: 'var(--radius-full)', background: isRegister ? '' : 'none', color: isRegister ? '#fff' : 'var(--text-muted)' }}
             onClick={() => setIsRegister(true)}
@@ -160,6 +165,7 @@ const SignInPage = () => {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <button
+              type="button"
               onClick={() => handleDemoFill('nandkumarcoder@gmail.com', 'Nand@1234')}
               className="btn btn-outline"
               style={{ fontSize: '0.8rem', padding: '6px 12px', justifySelf: 'flex-start', textAlign: 'left' }}
@@ -167,6 +173,7 @@ const SignInPage = () => {
               👑 Admin (Nand): nandkumarcoder@gmail.com / Nand@1234
             </button>
             <button
+              type="button"
               onClick={() => handleDemoFill('alex@example.com', 'user1234')}
               className="btn btn-outline"
               style={{ fontSize: '0.8rem', padding: '6px 12px', textAlign: 'left' }}

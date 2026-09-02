@@ -42,6 +42,13 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, [displayText, isDeleting, roleIndex]);
 
+  const scrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="hero" className="hero-section">
       <div className="hero-content">
@@ -70,15 +77,15 @@ const Hero = () => {
         </p>
 
         <div className="hero-actions">
-          <a href="#projects" className="btn btn-primary">
+          <button type="button" onClick={() => scrollTo('projects')} className="btn btn-primary">
             View Projects <ArrowRight size={18} />
-          </a>
+          </button>
           <Link to="/blog" className="btn btn-outline">
             <BookOpen size={18} /> Explore Blog
           </Link>
-          <a href="#contact" className="btn btn-outline">
+          <button type="button" onClick={() => scrollTo('contact')} className="btn btn-outline">
             Let's Connect
-          </a>
+          </button>
         </div>
 
         <div className="hero-socials">

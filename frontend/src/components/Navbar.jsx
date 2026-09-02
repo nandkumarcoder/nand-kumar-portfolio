@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
 import logoImg from '../assets/logo.png';
@@ -9,27 +9,50 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const { themeMode, setThemeMode } = useContext(ThemeContext);
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isActive = (path) => location.pathname === path;
 
+  const handleScrollTo = (sectionId) => {
+    setMobileOpen(false);
+    if (location.pathname === '/') {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate(`/#${sectionId}`);
+    }
+  };
+
   return (
     <header className="navbar-header">
       <div className="navbar-container">
-        <Link to="/" className="logo">
+        <Link to="/" className="logo" onClick={() => setMobileOpen(false)}>
           <img src={logoImg} alt="Nand Kumar Logo" className="logo-img" />
           <span>Nand Kumar</span>
         </Link>
 
-        <nav className="nav-links">
-          <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>Home</Link>
-          <a href="/#about" className="nav-link">About</a>
-          <a href="/#skills" className="nav-link">Skills</a>
-          <a href="/#projects" className="nav-link">Projects</a>
-          <Link to="/blog" className={`nav-link ${isActive('/blog') ? 'active' : ''}`}>
+        <nav className={`nav-links ${mobileOpen ? 'mobile-open' : ''}`}>
+          <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`} onClick={() => setMobileOpen(false)}>
+            Home
+          </Link>
+          <button className="nav-link" onClick={() => handleScrollTo('about')}>
+            About
+          </button>
+          <button className="nav-link" onClick={() => handleScrollTo('skills')}>
+            Skills
+          </button>
+          <button className="nav-link" onClick={() => handleScrollTo('projects')}>
+            Projects
+          </button>
+          <Link to="/blog" className={`nav-link ${isActive('/blog') ? 'active' : ''}`} onClick={() => setMobileOpen(false)}>
             Blog
           </Link>
-          <a href="/#contact" className="nav-link">Contact</a>
+          <button className="nav-link" onClick={() => handleScrollTo('contact')}>
+            Contact
+          </button>
 
           {/* Theme Switcher */}
           <div className="theme-switcher" title="Theme Mode: Light, Dark, System">
@@ -58,12 +81,12 @@ const Navbar = () => {
 
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Link to="/dashboard" className="nav-auth-btn">
+              <Link to="/dashboard" className="nav-auth-btn" onClick={() => setMobileOpen(false)}>
                 <BookOpen size={16} />
                 <span>Dashboard ({user.name.split(' ')[0]})</span>
               </Link>
               <button
-                onClick={logout}
+                onClick={() => { logout(); setMobileOpen(false); }}
                 className="btn btn-outline"
                 style={{ padding: '6px 14px', fontSize: '0.85rem' }}
                 title="Log out"
@@ -72,7 +95,7 @@ const Navbar = () => {
               </button>
             </div>
           ) : (
-            <Link to="/signin" className="nav-auth-btn">
+            <Link to="/signin" className="nav-auth-btn" onClick={() => setMobileOpen(false)}>
               <User size={16} />
               <span>Blogger Sign In</span>
             </Link>
