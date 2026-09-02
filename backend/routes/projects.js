@@ -1,17 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const store = require('../data/store');
+const db = require('../data/dbManager');
 
 // GET /api/projects
-router.get('/', (req, res) => {
-  const { category } = req.query;
-  let projects = [...store.projects];
-
-  if (category && category !== 'all') {
-    projects = projects.filter(p => p.category.toLowerCase() === category.toLowerCase());
+router.get('/', async (req, res) => {
+  try {
+    const { category } = req.query;
+    const projects = await db.getProjects(category);
+    res.json({ projects });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch projects.' });
   }
-
-  res.json({ projects });
 });
 
 module.exports = router;

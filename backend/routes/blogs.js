@@ -1,188 +1,144 @@
 const express = require('express');
 const router = express.Router();
-const store = require('../data/store');
+const db = require('../data/dbManager');
 const { authMiddleware } = require('../middleware/auth');
 
 // GET /api/blogs
-router.get('/', (req, res) => {
-  let { search, category, tag } = req.query;
-  let results = [...store.blogs];
-
-  if (category && category !== 'All') {
-    results = results.filter(b => b.category.toLowerCase() === category.toLowerCase());
+router.get('/', async (req, res) => {
+  try {
+    const { category, search } = req.query;
+    const blogs = await db.getBlogs({ category, search });
+    res.json({ blogs });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch blogs.' });
   }
-
-  if (tag) {
-    results = results.filter(b => b.tags.some(t => t.toLowerCase() === tag.toLowerCase()));
-  }
-
-  if (search) {
-    const q = search.toLowerCase();
-    results = results.filter(b =>
-      b.title.toLowerCase().includes(q) ||
-      b.excerpt.toLowerCase().includes(q) ||
-      b.content.toLowerCase().includes(q) ||
-      b.authorName.toLowerCase().includes(q)
-    );
-  }
-
-  // Sort by newest first
-  results.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-
-  res.json({ blogs: results });
 });
 
 // GET /api/blogs/:idOrSlug
-router.get('/:idOrSlug', (req, res) => {
-  const param = req.params.idOrSlug;
-  const blog = store.blogs.find(b => b.id === param || b.slug === param);
-
-  if (!blog) {
-    return res.status(404).json({ error: 'Blog post not found.' });
-  }
-
-  const author = store.users.find(u => u.id === blog.authorId);
-
-  res.json({
-    blog: {
-      ...blog,
-      authorBio: author ? author.bio : 'Contributing Tech Blogger',
-      authorAvatar: author ? author.avatar : ''
+router.get('/:idOrSlug', async (req, res) => {
+  try {
+    const blog = await db.getBlogById(req.params.idOrSlug);
+    if (!blog) {
+      return res.status(404).json({ error: 'Blog post not found.' });
     }
-  });
+    res.json({ blog });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch blog post.' });
+  }
 });
 
-// POST /api/blogs (Protected)
-router.post('/', authMiddleware, (req, res) => {
-  const { title, excerpt, content, category, tags, coverImage } = req.body;
+// POST /api/blogs (Auth required)
+router.post('/', authMiddleware, async (req, res) => {
+  try {
+    const { title, excerpt, content, category, tags, coverImage, readTime } = req.body;
 
-  if (!title || !content || !excerpt) {
-    return res.status(400).json({ error: 'Title, excerpt, and content are required fields.' });
+    if (!title || !excerpt || !content) {
+      return res.status(400).json({ error: 'Title, excerpt, and content are required.' });
+    }
+
+    const slug = title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
+    const newBlog = await db.createBlog({
+      title,
+      slug,
+      excerpt,
+      content,
+      category: category || 'General Tech',
+      tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map(t => t.trim()) : [],
+      coverImage: coverImage || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800',
+      readTime: readTime || '5 min read',
+      authorId: req.user.id,
+      authorName: req.user.name,
+      authorBio: req.user.bio
+    });
+
+    res.status(201).json({ message: 'Blog post published successfully', blog: newBlog });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error publishing blog.' });
   }
-
-  const slug = title
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-');
-
-  const words = content.split(/\s+/).length;
-  const readTimeMinutes = Math.max(1, Math.ceil(words / 150));
-
-  const user = store.users.find(u => u.id === req.user.id);
-
-  const newBlog = {
-    id: `blog-${Date.now()}`,
-    title,
-    slug: `${slug}-${Math.floor(Math.random() * 1000)}`,
-    excerpt,
-    content,
-    category: category || 'General Tech',
-    tags: Array.isArray(tags) ? tags : (tags ? tags.split(',').map(t => t.trim()) : ['Tech']),
-    authorId: req.user.id,
-    authorName: user ? user.name : req.user.name,
-    coverImage: coverImage || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800',
-    readTime: `${readTimeMinutes} min read`,
-    likes: 0,
-    publishedAt: new Date().toISOString(),
-    comments: []
-  };
-
-  store.blogs.unshift(newBlog);
-
-  res.status(201).json({
-    message: 'Blog post published successfully!',
-    blog: newBlog
-  });
 });
 
-// PUT /api/blogs/:id (Protected)
-router.put('/:id', authMiddleware, (req, res) => {
-  const blogIndex = store.blogs.findIndex(b => b.id === req.params.id);
-  if (blogIndex === -1) {
-    return res.status(404).json({ error: 'Blog post not found.' });
+// PUT /api/blogs/:id (Auth required)
+router.put('/:id', authMiddleware, async (req, res) => {
+  try {
+    const blog = await db.getBlogById(req.params.id);
+    if (!blog) {
+      return res.status(404).json({ error: 'Blog post not found.' });
+    }
+
+    if (blog.authorId !== req.user.id && req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'Unauthorized to edit this article.' });
+    }
+
+    const { title, excerpt, content, category, tags, coverImage, readTime } = req.body;
+    const updateData = {
+      ...(title && { title }),
+      ...(excerpt && { excerpt }),
+      ...(content && { content }),
+      ...(category && { category }),
+      ...(tags && { tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map(t => t.trim()) : [] }),
+      ...(coverImage && { coverImage }),
+      ...(readTime && { readTime })
+    };
+
+    const updatedBlog = await db.updateBlog(req.params.id, updateData);
+    res.json({ message: 'Blog post updated successfully', blog: updatedBlog });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error updating blog.' });
   }
-
-  const blog = store.blogs[blogIndex];
-
-  if (blog.authorId !== req.user.id && req.user.role !== 'admin') {
-    return res.status(403).json({ error: 'You are not authorized to edit this post.' });
-  }
-
-  const { title, excerpt, content, category, tags, coverImage } = req.body;
-
-  if (title) blog.title = title;
-  if (excerpt) blog.excerpt = excerpt;
-  if (content) {
-    blog.content = content;
-    const words = content.split(/\s+/).length;
-    blog.readTime = `${Math.max(1, Math.ceil(words / 150))} min read`;
-  }
-  if (category) blog.category = category;
-  if (tags) blog.tags = Array.isArray(tags) ? tags : tags.split(',').map(t => t.trim());
-  if (coverImage) blog.coverImage = coverImage;
-
-  store.blogs[blogIndex] = blog;
-
-  res.json({
-    message: 'Blog post updated successfully!',
-    blog
-  });
 });
 
-// DELETE /api/blogs/:id (Protected)
-router.delete('/:id', authMiddleware, (req, res) => {
-  const blogIndex = store.blogs.findIndex(b => b.id === req.params.id);
-  if (blogIndex === -1) {
-    return res.status(404).json({ error: 'Blog post not found.' });
+// DELETE /api/blogs/:id (Auth required)
+router.delete('/:id', authMiddleware, async (req, res) => {
+  try {
+    const blog = await db.getBlogById(req.params.id);
+    if (!blog) {
+      return res.status(404).json({ error: 'Blog post not found.' });
+    }
+
+    if (blog.authorId !== req.user.id && req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'Unauthorized to delete this article.' });
+    }
+
+    await db.deleteBlog(req.params.id);
+    res.json({ message: 'Blog post deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error deleting blog.' });
   }
-
-  const blog = store.blogs[blogIndex];
-
-  if (blog.authorId !== req.user.id && req.user.role !== 'admin') {
-    return res.status(403).json({ error: 'You are not authorized to delete this post.' });
-  }
-
-  store.blogs.splice(blogIndex, 1);
-
-  res.json({ message: 'Blog post deleted successfully.' });
-});
-
-// POST /api/blogs/:id/comments
-router.post('/:id/comments', (req, res) => {
-  const { userName, comment } = req.body;
-  if (!comment || !userName) {
-    return res.status(400).json({ error: 'Name and comment text are required.' });
-  }
-
-  const blog = store.blogs.find(b => b.id === req.params.id);
-  if (!blog) {
-    return res.status(404).json({ error: 'Blog post not found.' });
-  }
-
-  const newComment = {
-    id: `c-${Date.now()}`,
-    userName,
-    comment,
-    createdAt: new Date().toISOString()
-  };
-
-  blog.comments.push(newComment);
-
-  res.status(201).json({
-    message: 'Comment added',
-    comment: newComment
-  });
 });
 
 // POST /api/blogs/:id/like
-router.post('/:id/like', (req, res) => {
-  const blog = store.blogs.find(b => b.id === req.params.id);
-  if (!blog) {
-    return res.status(404).json({ error: 'Blog post not found.' });
+router.post('/:id/like', async (req, res) => {
+  try {
+    const blog = await db.likeBlog(req.params.id);
+    if (!blog) {
+      return res.status(404).json({ error: 'Blog post not found.' });
+    }
+    res.json({ likes: blog.likes });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update likes.' });
   }
+});
 
-  blog.likes += 1;
-  res.json({ likes: blog.likes });
+// POST /api/blogs/:id/comments
+router.post('/:id/comments', async (req, res) => {
+  try {
+    const { userName, comment } = req.body;
+    if (!userName || !comment) {
+      return res.status(400).json({ error: 'Name and comment text are required.' });
+    }
+
+    const newComment = await db.addComment(req.params.id, { userName, comment });
+    if (!newComment) {
+      return res.status(404).json({ error: 'Blog post not found.' });
+    }
+    res.status(201).json({ message: 'Comment added', comment: newComment });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to add comment.' });
+  }
 });
 
 module.exports = router;

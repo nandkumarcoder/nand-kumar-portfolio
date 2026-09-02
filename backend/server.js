@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const connectDB = require('./config/db');
 
 dotenv.config();
 
@@ -27,6 +28,9 @@ app.use(cors({
 
 app.use(express.json());
 
+// Initialize Database connection (MongoDB with local persistent JSON fallback)
+connectDB();
+
 // Routes
 const authRoutes = require('./routes/auth');
 const blogRoutes = require('./routes/blogs');
@@ -42,14 +46,14 @@ app.use('/api/projects', projectRoutes);
 
 // Health check / root (Render pings this to verify the service is alive)
 app.get('/', (req, res) => {
-  res.json({ status: 'ok', message: 'Nand Kumar Portfolio API is live!', timestamp: new Date() });
+  res.json({ status: 'ok', message: 'Nand Kumar Portfolio API is live with Database active!', timestamp: new Date() });
 });
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Nand Kumar Portfolio Backend is running', timestamp: new Date() });
+  res.json({ status: 'ok', message: 'Nand Kumar Portfolio Backend & Database are running smoothly', timestamp: new Date() });
 });
 
-// Listen on 0.0.0.0 for Render compatibility
+// Listen on 0.0.0.0 for Render & local compatibility
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Backend server running on http://0.0.0.0:${PORT}`);
 });
