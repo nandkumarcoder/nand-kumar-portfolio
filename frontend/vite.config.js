@@ -3,8 +3,8 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react()],
-  // base path for GitHub Pages: https://nandkumarcoder.github.io/nand-kumar-portfolio/
-  base: process.env.NODE_ENV === 'production' ? '/nand-kumar-portfolio/' : '/',
+  // Relative base path ensures 100% reliable CSS/JS loading on GitHub Pages and custom domains
+  base: './',
   server: {
     host: '0.0.0.0',
     port: 5173,

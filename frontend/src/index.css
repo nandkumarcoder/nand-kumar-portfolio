@@ -1171,10 +1171,35 @@ body {
   .about-grid, .contact-grid {
     grid-template-columns: 1fr;
   }
-  .nav-links {
-    display: none;
-  }
   .mobile-menu-btn {
     display: block;
+  }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    width: 100%;
+    background: var(--bg-navbar);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    box-shadow: var(--shadow-subtle);
+  }
+  .nav-links.mobile-open {
+    display: flex;
+  }
+  .nav-links .nav-link {
+    justify-content: center;
+    padding: 10px;
+  }
+  .theme-switcher {
+    justify-content: center;
+    margin: 8px 0;
   }
 }
