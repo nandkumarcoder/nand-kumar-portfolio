@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const db = require('../data/dbManager');
 const { authMiddleware, JWT_SECRET } = require('../middleware/auth');
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
   try {
@@ -12,6 +14,14 @@ router.post('/register', async (req, res) => {
 
     if (!name || !email || !password) {
       return res.status(400).json({ error: 'Name, email, and password are required.' });
+    }
+
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Please enter a valid email address (e.g. name@example.com).' });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
     }
 
     const existing = await db.findUserByEmail(email);

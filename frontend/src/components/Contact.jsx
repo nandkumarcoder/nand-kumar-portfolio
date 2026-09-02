@@ -3,6 +3,8 @@ import { Mail, MapPin, Send, CheckCircle2, ExternalLink } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import API_BASE_URL from '../config/api';
 
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -19,6 +21,15 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!emailRegex.test(formData.email)) {
+      setStatus({
+        type: 'error',
+        msg: '⚠️ Please enter a valid email address (e.g. name@example.com)'
+      });
+      return;
+    }
+
     setSubmitting(true);
     setStatus({ type: '', msg: '' });
 

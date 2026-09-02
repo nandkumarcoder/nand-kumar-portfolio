@@ -2,7 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import logoImg from '../assets/logo.png';
-import { LogIn, UserPlus, Eye, EyeOff } from 'lucide-react';
+import { LogIn, UserPlus, Eye, EyeOff, AlertCircle } from 'lucide-react';
+
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const SignInPage = () => {
   const { login, register, user } = useContext(AuthContext);
@@ -16,6 +18,7 @@ const SignInPage = () => {
   const [title, setTitle] = useState('');
   const [bio, setBio] = useState('');
 
+  const [emailError, setEmailError] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -25,9 +28,30 @@ const SignInPage = () => {
     }
   }, [user, navigate]);
 
+  const handleEmailChange = (e) => {
+    const val = e.target.value;
+    setEmail(val);
+    if (val && !emailRegex.test(val)) {
+      setEmailError('Please enter a valid email address (e.g. name@example.com)');
+    } else {
+      setEmailError('');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (!emailRegex.test(email)) {
+      setEmailError('Please enter a valid email address.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+
     setSubmitting(true);
 
     try {
@@ -68,7 +92,7 @@ const SignInPage = () => {
             type="button"
             className={`btn ${!isRegister ? 'btn-primary' : ''}`}
             style={{ flex: 1, padding: '8px', fontSize: '0.85rem', borderRadius: 'var(--radius-full)', background: !isRegister ? '' : 'none', color: !isRegister ? '#fff' : 'var(--text-muted)' }}
-            onClick={() => setIsRegister(false)}
+            onClick={() => { setIsRegister(false); setError(''); setEmailError(''); }}
           >
             <LogIn size={16} /> Sign In
           </button>
@@ -76,7 +100,7 @@ const SignInPage = () => {
             type="button"
             className={`btn ${isRegister ? 'btn-primary' : ''}`}
             style={{ flex: 1, padding: '8px', fontSize: '0.85rem', borderRadius: 'var(--radius-full)', background: isRegister ? '' : 'none', color: isRegister ? '#fff' : 'var(--text-muted)' }}
-            onClick={() => setIsRegister(true)}
+            onClick={() => { setIsRegister(true); setError(''); setEmailError(''); }}
           >
             <UserPlus size={16} /> Register
           </button>
@@ -103,12 +127,19 @@ const SignInPage = () => {
             <label>Email Address</label>
             <input
               type="email"
-              className="form-input"
+              className={`form-input ${emailError ? 'input-error' : ''}`}
               placeholder="name@example.com"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               required
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+              title="Please enter a valid email address (e.g. name@example.com)"
             />
+            {emailError && (
+              <div style={{ color: 'var(--accent-rose)', fontSize: '0.8rem', marginTop: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <AlertCircle size={14} /> {emailError}
+              </div>
+            )}
           </div>
 
           <div className="form-group">
@@ -121,6 +152,7 @@ const SignInPage = () => {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
+                minLength={6}
                 style={{ paddingRight: '48px', width: '100%' }}
               />
               <button
