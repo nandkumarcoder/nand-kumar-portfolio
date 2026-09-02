@@ -1,52 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root, [data-theme="dark"] {
-  --bg-primary: #0b0f19;
-  --bg-secondary: #111827;
-  --bg-card: rgba(17, 24, 39, 0.75);
-  --bg-card-hover: rgba(31, 41, 55, 0.88);
-  --bg-navbar: rgba(11, 15, 25, 0.85);
+  --bg-primary: #070913;
+  --bg-secondary: #0d1224;
+  --bg-card: rgba(13, 18, 36, 0.72);
+  --bg-card-hover: rgba(20, 28, 56, 0.88);
+  --bg-navbar: rgba(7, 9, 19, 0.82);
   
-  --accent-cyan: #38bdf8;
+  --accent-cyan: #00e5ff;
   --accent-purple: #c084fc;
-  --accent-emerald: #34d399;
+  --accent-emerald: #10b981;
   --accent-rose: #f43f5e;
+  --accent-gold: #fbbf24;
   
-  --text-main: #f3f4f6;
-  --text-muted: #9ca3af;
-  --text-dim: #6b7280;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
   
-  --border-glass: rgba(255, 255, 255, 0.12);
-  --border-glass-bright: rgba(56, 189, 248, 0.35);
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --border-glass-bright: rgba(0, 229, 255, 0.4);
   
-  --shadow-subtle: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.2);
+  --shadow-subtle: 0 12px 40px -10px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 30px rgba(0, 229, 255, 0.25);
+  --shadow-purple-glow: 0 0 30px rgba(192, 132, 252, 0.25);
   
-  --input-bg: rgba(255, 255, 255, 0.04);
-  --input-bg-focus: rgba(255, 255, 255, 0.08);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-bg-focus: rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="light"] {
-  --bg-primary: #f8fafc;
+  --bg-primary: #f1f5f9;
   --bg-secondary: #ffffff;
-  --bg-card: rgba(255, 255, 255, 0.82);
-  --bg-card-hover: rgba(241, 245, 249, 0.95);
-  --bg-navbar: rgba(255, 255, 255, 0.88);
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-card-hover: #ffffff;
+  --bg-navbar: rgba(255, 255, 255, 0.9);
   
   --accent-cyan: #0284c7;
-  --accent-purple: #7e22ce;
+  --accent-purple: #7c3aed;
   --accent-emerald: #059669;
   --accent-rose: #e11d48;
+  --accent-gold: #d97706;
   
   --text-main: #0f172a;
-  --text-muted: #475569;
+  --text-muted: #334155;
   --text-dim: #64748b;
   
   --border-glass: rgba(15, 23, 42, 0.12);
-  --border-glass-bright: rgba(2, 132, 199, 0.4);
+  --border-glass-bright: rgba(2, 132, 199, 0.45);
   
-  --shadow-subtle: 0 10px 30px -10px rgba(15, 23, 42, 0.08);
-  --shadow-glow: 0 0 25px rgba(2, 132, 199, 0.15);
+  --shadow-subtle: 0 12px 35px -10px rgba(15, 23, 42, 0.1);
+  --shadow-glow: 0 0 25px rgba(2, 132, 199, 0.2);
+  --shadow-purple-glow: 0 0 25px rgba(124, 58, 237, 0.2);
   
   --input-bg: rgba(15, 23, 42, 0.04);
   --input-bg-focus: rgba(15, 23, 42, 0.08);
