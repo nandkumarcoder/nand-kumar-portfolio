@@ -3,6 +3,7 @@
 :root, [data-theme="dark"] {
   --bg-primary: #070913;
   --bg-secondary: #0d1224;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #161c36 0%, #070913 80%);
   --bg-card: rgba(13, 18, 36, 0.72);
   --bg-card-hover: rgba(20, 28, 56, 0.88);
   --bg-navbar: rgba(7, 9, 19, 0.82);
@@ -29,11 +30,12 @@
 }
 
 [data-theme="light"] {
-  --bg-primary: #f1f5f9;
+  --bg-primary: #f8fafc;
   --bg-secondary: #ffffff;
-  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-gradient: radial-gradient(circle at 50% 0%, #e0f2fe 0%, #f8fafc 85%);
+  --bg-card: rgba(255, 255, 255, 0.95);
   --bg-card-hover: #ffffff;
-  --bg-navbar: rgba(255, 255, 255, 0.9);
+  --bg-navbar: rgba(255, 255, 255, 0.92);
   
   --accent-cyan: #0284c7;
   --accent-purple: #7c3aed;
@@ -42,7 +44,7 @@
   --accent-gold: #d97706;
   
   --text-main: #0f172a;
-  --text-muted: #334155;
+  --text-muted: #475569;
   --text-dim: #64748b;
   
   --border-glass: rgba(15, 23, 42, 0.12);
@@ -82,12 +84,12 @@ html {
 body {
   font-family: var(--font-body);
   background-color: var(--bg-primary);
-  background-image: radial-gradient(circle at 50% 0%, #161c36 0%, #070913 80%);
+  background-image: var(--bg-gradient);
   color: var(--text-main);
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
 /* Background Canvas */
