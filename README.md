@@ -1,13 +1,15 @@
-# 🚀 Nand Kumar | Full-Stack Developer Portfolio
+# 🚀 Nand Kumar | Full-Stack Developer & AI Portfolio
 
 <div align="center">
 
-![Nand Kumar](./frontend/src/assets/logo.png)
+<img src="./logo.png" alt="Nand Kumar" width="120" height="120" style="border-radius: 50%; object-fit: cover;" />
 
-**Full-Stack Developer · AI Engineer · Data Scientist · Node.js Expert · Zoho Specialist**
+### **Full-Stack Developer · AI & Data Science Engineer · Node.js Expert · Zoho Automation Specialist**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen?style=for-the-badge&logo=github)](https://nandkumarcoder.github.io/nand-kumar-portfolio/)
-[![React](https://img.shields.io/badge/Frontend-React%2018-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org)
+[![Live Portfolio](https://img.shields.io/badge/Live%20Portfolio-GitHub%20Pages-00e5ff?style=for-the-badge&logo=github)](https://nandkumarcoder.github.io/nand-kumar-portfolio/)
+[![Backend API](https://img.shields.io/badge/Backend%20API-Render.com-46E3B7?style=for-the-badge&logo=render)](https://nand-kumar-portfolio.onrender.com/api/health)
+[![Database](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?style=for-the-badge&logo=mongodb)](https://cloud.mongodb.com)
+[![React](https://img.shields.io/badge/Frontend-React%2018%20%2B%20Vite-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
 [![Node.js](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933?style=for-the-badge&logo=node.js)](https://nodejs.org)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
@@ -15,111 +17,114 @@
 
 ---
 
-## 🌐 Live Demo
+## 🌐 Live Deployments
 
-👉 **[https://nandkumarcoder.github.io/nand-kumar-portfolio/](https://nandkumarcoder.github.io/nand-kumar-portfolio/)**
-
----
-
-## 📖 About
-
-A **Full-Stack Portfolio & Blog Platform** built from the ground up with **React 18** on the frontend and **Node.js + Express** on the backend. Designed to showcase projects, publish tech articles, and allow visitors to contact me directly at my inbox.
-
-This project is a complete rewrite and upgrade of the original vanilla HTML/CSS/JS portfolio into a modern, component-driven React application with a RESTful API backend.
+- 💻 **Frontend Web App:** [https://nandkumarcoder.github.io/nand-kumar-portfolio/](https://nandkumarcoder.github.io/nand-kumar-portfolio/)
+- ⚙️ **Production REST API:** [https://nand-kumar-portfolio.onrender.com/](https://nand-kumar-portfolio.onrender.com/)
+- 🗄️ **Cloud Database:** MongoDB Atlas Cluster (`portfolio` database)
 
 ---
 
-## 🛠️ Tech Stack
+## 📖 Overview
 
-### Frontend
-| Technology | Purpose |
-|---|---|
-| **React 18 + Vite** | Core UI Framework |
-| **React Router v7** | Client-side Routing |
-| **Vanilla CSS3** | Custom Design System (Glassmorphism) |
-| **HTML5 Canvas** | Particle Background |
-| **Lucide React** | Icon Library |
-| **Web3Forms API** | Direct Inbox Email Delivery |
+A modern, production-grade **Full-Stack Developer Portfolio & Technical Publishing Platform** built with **React 18** on the frontend, **Node.js + Express** on the backend, and **MongoDB Atlas** in the cloud.
 
-### Backend
-| Technology | Purpose |
-|---|---|
-| **Node.js + Express** | REST API Server |
-| **JWT (jsonwebtoken)** | Authentication |
-| **bcryptjs** | Password Hashing |
-| **CORS** | Cross-Origin Resource Sharing |
-| **In-Memory Store** | Lightweight Data Layer |
+The platform showcases machine learning and web projects with high-definition previews, offers a dynamic multi-theme experience (Day, Night, System), includes a full-featured technical blogging CMS with rich markdown formatting, and supports secure user registration and direct inbox messaging.
+
+---
+
+## 🛠️ Tech Stack & Architecture
+
+### 🎨 Frontend
+- **Framework:** React 18 with Vite
+- **Routing:** React Router (`HashRouter` for zero 404s on GitHub Pages)
+- **Styling:** Custom Quantum Obsidian Design System (Glassmorphism & Neon HSL Accents)
+- **Theming:** 3-Way Dynamic Engine (**Day / Light Mode**, **Night / Obsidian Dark Mode**, **System Auto Mode**)
+- **Visuals:** HTML5 Canvas particle constellation network adapting dynamically to active themes
+- **Icons:** Lucide React & Custom SVG Tech Stacks
+
+### ⚙️ Backend & API
+- **Runtime:** Node.js & Express.js
+- **Database Layer:** Mongoose ORM connected to **MongoDB Atlas Cloud Cluster**
+- **Authentication:** JSON Web Tokens (JWT) with `bcryptjs` password encryption
+- **Security:** Strict email regex validation, password visibility toggle, and CORS configuration
+- **Cloud Hosting:** Deployed on Render.com with auto-deploy pipelines
 
 ---
 
 ## ✨ Key Features
 
-### 🎨 UI & Design
-- 🌙 **Dark / Light / System Mode** — Three-way theme switcher that respects OS preference and persists in `localStorage`
-- ✨ **Glassmorphism Design** — Premium translucent cards with animated HSL glow borders
-- 🌌 **Particle Constellation Background** — HTML5 Canvas particle network that adapts colors to the active theme
-- ⌨️ **Role Typing Animation** — Hero section cycles through roles: *Full-Stack Developer, AI Developer, Data Scientist, Node.js Developer, Zoho Specialist*
-- 📸 **Custom Profile Avatar** — Hero section and navbar logo display my personal photo
+### 🌟 Interactive UI & Themes
+- ☀️ **Day Mode:** Clean daylight sky gradient (`#e0f2fe` → `#f8fafc`) with high-contrast text and luminous glass cards.
+- 🌙 **Night Mode:** Signature obsidian midnight gradient (`#161c36` → `#070913`) with neon cyan (`#00e5ff`) and purple glow borders.
+- 🖥️ **System Preference Mode:** Automatically synchronizes with the user's operating system color scheme.
+- ⌨️ **Hero Typing Animation:** Dynamic cycle showcasing: *Full-Stack Developer, AI Developer, Data Scientist, Node.js Specialist, Zoho Expert*.
 
-### 📄 Pages
-- **Home** — Hero, About, Skills, Projects, Contact sections
-- **Blog** — Searchable, filterable tech articles with likes, tags, and read time
-- **Blog Post Detail** — Full markdown-style article view with author card
-- **Sign In / Sign Up** — JWT-authenticated login with role-based access (Admin / User)
-- **Dashboard** — Admin dashboard to view contact messages and manage blog posts
+### 🚀 Featured Projects Showcase
+- **Neural Sales Forecaster** (Python, TensorFlow, LSTM, Pandas) — 94% accuracy inventory demand forecaster.
+- **OmniTask Kanban Dashboard** (Node.js, Express, PostgreSQL, Glassmorphism UI) — Real-time team coordination workspace.
+- **Custom CRM Leads Sync System** (Zoho Creator, Deluge Script, REST Webhooks) — Automated lead acquisition pipeline.
+- **Sentiment & NLP Review Analyzer** (Python, NLTK, Scikit-Learn, Node.js) — Natural language text clustering & sentiment mapping.
+- **Secure RESTful API Gateway** (Node.js, Express, JWT Auth) — High-throughput token-authenticated data exchange console.
+- **Vendor Invoicing & Management Portal** (Zoho Creator, Deluge SQL, Zoho Analytics) — Low-code enterprise approval workflow.
 
-### 📬 Contact & Email
-- Contact form sends messages **directly to `nandkumarcoder@gmail.com`** via Web3Forms API
-- Fallback `mailto:` link opens mail client if API fails
-- Backend stores all messages for admin review at `/api/contact`
+### ✍️ Creator & Blogger CMS
+- **MongoDB Atlas Persistence:** All registered authors, articles, comments, and likes are saved in cloud collections.
+- **Admin Dashboard:** Manage and publish articles with tags, categories, cover photos, and view all registered users.
+- **Secure Authentication:** Password visibility toggle (Eye/EyeOff icon) and real-time email format validation.
 
-### 🔐 Authentication
-- JWT-based login with `bcrypt` password hashing
-- Admin role: `nandkumarcoder@gmail.com`
-- Protected routes for Dashboard and blog management
+### 📬 Direct Inbox Delivery
+- Contact submissions trigger direct delivery to **`nandkumarcoder@gmail.com`** with database backup logging.
 
 ---
 
-## 📁 Project Structure
+## 📁 Repository Structure
 
 ```
 nand-kumar-portfolio/
-├── frontend/                 # React 18 + Vite app
+├── frontend/                     # React 18 + Vite Frontend Application
 │   ├── src/
-│   │   ├── assets/           # Images, logo
-│   │   ├── components/       # Navbar, Hero, About, Skills, Projects, Contact, Chatbot, Footer
-│   │   ├── context/          # AuthContext, ThemeContext
-│   │   ├── pages/            # Home, BlogPage, BlogPostDetail, SignInPage, DashboardPage
-│   │   ├── App.jsx           # Router + Providers
-│   │   ├── main.jsx          # React entry point
-│   │   └── index.css         # Global design system
-│   ├── index.html
-│   └── vite.config.js
+│   │   ├── assets/               # Logo and avatar assets
+│   │   ├── components/           # Navbar, Hero, About, Skills, Projects, Contact, Footer
+│   │   ├── context/              # AuthContext, ThemeContext
+│   │   ├── pages/                # Home, BlogPage, BlogPostDetail, SignInPage, DashboardPage
+│   │   ├── config/               # API base URL routing
+│   │   ├── data/                 # Seed data and fallbacks
+│   │   ├── App.jsx               # Top-level Router & Providers
+│   │   ├── index.css             # Glassmorphic Theme Engine & CSS Variables
+│   │   └── main.jsx              # React Entrypoint
+│   ├── vite.config.js            # Vite build configuration
+│   └── package.json
 │
-├── backend/                  # Node.js + Express REST API
+├── backend/                      # Node.js + Express REST API Server
+│   ├── config/
+│   │   └── db.js                 # MongoDB Atlas cloud database connector
 │   ├── data/
-│   │   └── store.js          # In-memory data store (users, posts, messages)
+│   │   └── dbManager.js          # Unified CRUD layer
 │   ├── middleware/
-│   │   └── auth.js           # JWT auth middleware
-│   ├── routes/
-│   │   ├── auth.js           # POST /api/auth/login, /register
-│   │   ├── posts.js          # GET/POST/PUT/DELETE /api/posts
-│   │   └── contact.js        # POST /api/contact (→ sends to Gmail inbox)
-│   └── server.js             # Express app entry point
+│   │   └── auth.js               # JWT authentication middleware
+│   ├── models/                   # Mongoose schemas (User, Blog, Contact)
+│   ├── routes/                   # Auth, Blogs, Contact, Projects routes
+│   ├── scripts/
+│   │   └── seedAtlas.js          # One-command database migration script
+│   ├── server.js                 # Express server configuration
+│   └── package.json
 │
-├── index.html                # Original vanilla HTML portfolio (legacy)
-├── styles.css                # Original vanilla CSS (legacy)
-├── script.js                 # Original vanilla JS (legacy)
+├── api/
+│   └── index.js                  # Serverless function entrypoint
+├── render.yaml                   # Render.com cloud deployment blueprint
+├── vercel.json                   # Vercel deployment blueprint
+├── .github/workflows/deploy.yml  # GitHub Actions automated build & deployment
 └── README.md
 ```
 
 ---
 
-## 💻 Local Setup
+## 💻 Local Development Setup
 
 ### Prerequisites
-- **Node.js** v18+ ([Download](https://nodejs.org))
-- **npm** v9+
+- **Node.js** v18+ ([Download Node.js](https://nodejs.org))
+- **Git**
 
 ### 1. Clone the repository
 ```bash
@@ -127,57 +132,40 @@ git clone https://github.com/nandkumarcoder/nand-kumar-portfolio.git
 cd nand-kumar-portfolio
 ```
 
-### 2. Start the Backend API
+### 2. Configure & Run the Backend
 ```bash
 cd backend
 npm install
 node server.js
-# Backend running at http://localhost:5000
+# Backend API will start on http://localhost:5000
 ```
 
 ### 3. Start the React Frontend
 ```bash
-cd frontend
+cd ../frontend
 npm install
 npm run dev
-# Frontend running at http://localhost:5173
+# Frontend will start on http://localhost:5173
 ```
 
-### 4. Open in browser
-Navigate to **[http://localhost:5173](http://localhost:5173)**
+---
+
+## 🚀 Cloud Deployment Commands
+
+### Sync & Seed Data to MongoDB Atlas
+To push all default users, articles, and data directly into your MongoDB Atlas cloud database:
+```bash
+cd backend
+npm run seed:atlas
+```
 
 ---
 
-## 🔑 Default Login Credentials
-
-| Role | Email | Password |
-|---|---|---|
-| **Admin** | `nandkumarcoder@gmail.com` | `Nand@1234` |
-| **User** | `alex@example.com` | `user1234` |
-
----
-
-## 🚀 API Endpoints
-
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/api/auth/login` | No | Login user |
-| POST | `/api/auth/register` | No | Register new user |
-| GET | `/api/posts` | No | Get all blog posts |
-| GET | `/api/posts/:id` | No | Get single post |
-| POST | `/api/posts` | Admin | Create blog post |
-| PUT | `/api/posts/:id` | Admin | Update blog post |
-| DELETE | `/api/posts/:id` | Admin | Delete blog post |
-| POST | `/api/contact` | No | Send contact message to inbox |
-| GET | `/api/contact` | Admin | View all messages |
-
----
-
-## 📬 Contact
+## 📬 Contact & Connect
 
 <div align="center">
 
-| | |
+| Channel | Link |
 |---|---|
 | 📧 **Email** | [nandkumarcoder@gmail.com](mailto:nandkumarcoder@gmail.com) |
 | 💼 **LinkedIn** | [linkedin.com/in/nand-kumar-943jf](https://www.linkedin.com/in/nand-kumar-943jf/) |
@@ -190,12 +178,10 @@ Navigate to **[http://localhost:5173](http://localhost:5173)**
 
 ## 📄 License
 
-This project is licensed under the **MIT License** — feel free to fork, star ⭐, and share!
-
----
+This project is licensed under the **MIT License** — feel free to fork, customize, and star ⭐ this repository!
 
 <div align="center">
 
-Made with ❤️ by **Nand Kumar** | Full-Stack Developer from Kanpur, India
+Crafted with ❤️ by **Nand Kumar** | Full-Stack & AI Engineer
 
 </div>
