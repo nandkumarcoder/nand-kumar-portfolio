@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ExternalLink, TrendingUp, Network, RefreshCw, MessageSquare, Newspaper, Users } from 'lucide-react';
 import { GithubIcon } from './Icons';
+import API_BASE_URL from '../config/api';
 
 const initialProjects = [
   {
@@ -82,7 +83,7 @@ const Projects = () => {
   const [projects, setProjects] = useState(initialProjects);
 
   useEffect(() => {
-    fetch(`/api/projects?category=${filter}`)
+    fetch(`${API_BASE_URL}/api/projects?category=${filter}`)
       .then(res => res.json())
       .then(data => {
         if (data.projects && data.projects.length > 0) {
