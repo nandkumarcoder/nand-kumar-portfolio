@@ -3,9 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../data/dbManager');
-const { authMiddleware } = require('../middleware/auth');
-
-const JWT_SECRET = process.env.JWT_SECRET || 'nand-kumar-portfolio-secret-key-2026';
+const { authMiddleware, JWT_SECRET } = require('../middleware/auth');
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
