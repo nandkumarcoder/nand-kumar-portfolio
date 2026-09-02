@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import logoImg from '../assets/logo.png';
-import { LogIn, UserPlus, Shield, Sparkles } from 'lucide-react';
+import { LogIn, UserPlus } from 'lucide-react';
 
 const SignInPage = () => {
   const { login, register, user } = useContext(AuthContext);
@@ -41,12 +41,6 @@ const SignInPage = () => {
     } finally {
       setSubmitting(false);
     }
-  };
-
-  const handleDemoFill = (demoEmail, demoPass) => {
-    setEmail(demoEmail);
-    setPassword(demoPass);
-    setIsRegister(false);
   };
 
   return (
@@ -157,31 +151,6 @@ const SignInPage = () => {
             {submitting ? 'Authenticating...' : isRegister ? 'Create Account' : 'Sign In'}
           </button>
         </form>
-
-        {/* Demo Credentials Helper Box */}
-        <div style={{ marginTop: '30px', borderTop: '1px solid var(--border-glass)', paddingTop: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: 'var(--accent-cyan)', fontWeight: '600', marginBottom: '10px' }}>
-            <Shield size={16} /> Quick Demo Login Credentials:
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <button
-              type="button"
-              onClick={() => handleDemoFill('nandkumarcoder@gmail.com', 'Nand@1234')}
-              className="btn btn-outline"
-              style={{ fontSize: '0.8rem', padding: '6px 12px', justifySelf: 'flex-start', textAlign: 'left' }}
-            >
-              👑 Admin (Nand): nandkumarcoder@gmail.com / Nand@1234
-            </button>
-            <button
-              type="button"
-              onClick={() => handleDemoFill('alex@example.com', 'user1234')}
-              className="btn btn-outline"
-              style={{ fontSize: '0.8rem', padding: '6px 12px', textAlign: 'left' }}
-            >
-              ✍️ Blogger (Alex): alex@example.com / user1234
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
