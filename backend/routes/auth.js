@@ -110,6 +110,12 @@ router.get('/me', authMiddleware, async (req, res) => {
       avatar: user.avatar,
       bio: user.bio
     };
+    res.json({ user: safeUser });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error fetching user.' });
+  }
+});
+
 // GET /api/auth/users (Admin only)
 router.get('/users', authMiddleware, async (req, res) => {
   try {
