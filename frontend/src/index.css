@@ -271,13 +271,20 @@ body {
   font-weight: 500;
   font-size: 0.95rem;
   transition: var(--transition-fast);
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  outline: none;
 }
 
 .nav-link:hover, .nav-link.active {
   color: var(--accent-cyan);
-  background: rgba(56, 189, 248, 0.1);
+  background: rgba(56, 189, 248, 0.12);
 }
 
 .nav-auth-btn {
