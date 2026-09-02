@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import ParticleBackground from './components/ParticleBackground';
@@ -12,14 +12,11 @@ import BlogPostDetail from './pages/BlogPostDetail';
 import SignInPage from './pages/SignInPage';
 import DashboardPage from './pages/DashboardPage';
 
-// Use basename for GitHub Pages deployment (sub-path routing)
-const basename = import.meta.env.MODE === 'production' ? '/nand-kumar-portfolio' : '/';
-
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <Router basename={basename}>
+        <Router>
           <div className="app-wrapper">
             <ParticleBackground />
             <Navbar />
