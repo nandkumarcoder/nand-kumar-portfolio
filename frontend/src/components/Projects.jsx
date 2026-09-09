@@ -40,18 +40,7 @@ const initialProjects = [
     demoUrl: 'https://github.com/nandkumarcoder/neural-sales-forecaster',
     icon: <TrendingUp size={16} />
   },
-  {
-    id: 'proj-2',
-    title: 'OmniTask Kanban Dashboard',
-    category: 'web-nodejs',
-    categoryName: 'Node.js & Web',
-    description: 'A full-featured team coordination application utilizing Node.js Express backend, PostgreSQL database, and asynchronous task notifications.',
-    tech: ['Node.js', 'Express', 'PostgreSQL', 'CSS Glassmorphism'],
-    image: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&q=80&w=800',
-    githubUrl: 'https://github.com/nandkumarcoder/omnitask-kanban-board',
-    demoUrl: 'https://github.com/nandkumarcoder/omnitask-kanban-board',
-    icon: <Network size={16} />
-  },
+
   {
     id: 'proj-3',
     title: 'Custom CRM Leads Sync System',

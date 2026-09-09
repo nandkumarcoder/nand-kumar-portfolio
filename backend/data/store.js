@@ -183,18 +183,7 @@ Try combining glassmorphic cards with animated canvas particle networks for an u
       icon: 'fa-chart-line',
       bgType: 'ai-bg'
     },
-    {
-      id: 'proj-2',
-      title: 'OmniTask Kanban Dashboard',
-      category: 'web-nodejs',
-      categoryName: 'Node.js & Web',
-      description: 'A full-featured team coordination application utilizing Node.js Express backend, PostgreSQL database, and asynchronous task notifications via JS fetch APIs.',
-      tech: ['Node.js', 'Express', 'PostgreSQL', 'CSS Glassmorphism'],
-      githubUrl: 'https://github.com/nandkumarcoder/omnitask-kanban-board',
-      demoUrl: 'https://github.com/nandkumarcoder/omnitask-kanban-board',
-      icon: 'fa-network-wired',
-      bgType: 'django-bg'
-    },
+
     {
       id: 'proj-3',
       title: 'Custom CRM Leads Sync System',
