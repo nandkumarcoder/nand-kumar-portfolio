@@ -1,9 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, TrendingUp, Network, RefreshCw, MessageSquare, Newspaper, Users } from 'lucide-react';
+import { ExternalLink, TrendingUp, Network, RefreshCw, MessageSquare, Newspaper, Users, Dumbbell, Droplets } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import API_BASE_URL from '../config/api';
 
 const initialProjects = [
+  {
+    id: 'proj-spark-fitness',
+    title: 'Spark Fitness',
+    category: 'web-nodejs',
+    categoryName: 'Web Application',
+    description: 'A dynamic, responsive fitness and workout program web application featuring interactive program navigation, workout routines, and high-energy modern visual styling.',
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'Responsive UI'],
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800',
+    githubUrl: 'https://github.com/nandkumarcoder/spark-fitness',
+    demoUrl: 'https://nandkumarcoder.github.io/spark-fitness/#programs',
+    icon: <Dumbbell size={16} />
+  },
+  {
+    id: 'proj-aquacast',
+    title: 'AquaCast - Water App',
+    category: 'web-nodejs',
+    categoryName: 'Web Application',
+    description: 'An intelligent water monitoring and forecasting dashboard designed to track precipitation levels, monitor supply metrics, and deliver hydrological forecasts.',
+    tech: ['JavaScript', 'Weather/Water API', 'CSS Glassmorphism', 'Charts'],
+    image: 'https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&q=80&w=800',
+    githubUrl: 'https://github.com/nandkumarcoder/AquaCast-Water-app',
+    demoUrl: 'https://nandkumarcoder.github.io/AquaCast-Water-app/',
+    icon: <Droplets size={16} />
+  },
   {
     id: 'proj-1',
     title: 'Neural Sales Forecaster',
@@ -12,8 +36,8 @@ const initialProjects = [
     description: 'An LSTM-based sales volume forecaster built to predict inventory needs using past transactional histories, resolving demand peaks with 94% accuracy.',
     tech: ['Python', 'TensorFlow', 'Pandas', 'NumPy'],
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
-    githubUrl: 'https://github.com/nandkumarcoder',
-    demoUrl: 'https://github.com/nandkumarcoder/nand-kumar-portfolio',
+    githubUrl: 'https://github.com/nandkumarcoder/neural-sales-forecaster',
+    demoUrl: 'https://github.com/nandkumarcoder/neural-sales-forecaster',
     icon: <TrendingUp size={16} />
   },
   {
@@ -24,8 +48,8 @@ const initialProjects = [
     description: 'A full-featured team coordination application utilizing Node.js Express backend, PostgreSQL database, and asynchronous task notifications.',
     tech: ['Node.js', 'Express', 'PostgreSQL', 'CSS Glassmorphism'],
     image: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&q=80&w=800',
-    githubUrl: 'https://github.com/nandkumarcoder',
-    demoUrl: 'https://github.com/nandkumarcoder/nand-kumar-portfolio',
+    githubUrl: 'https://github.com/nandkumarcoder/omnitask-kanban-board',
+    demoUrl: 'https://github.com/nandkumarcoder/omnitask-kanban-board',
     icon: <Network size={16} />
   },
   {
@@ -36,8 +60,8 @@ const initialProjects = [
     description: 'A Deluge-based integration solution synchronizing external landing pages with Zoho CRM leads pipeline, triggering tailored onboarding campaigns.',
     tech: ['Zoho Creator', 'Deluge Script', 'Zoho Flows', 'REST Webhooks'],
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
-    githubUrl: 'https://github.com/nandkumarcoder',
-    demoUrl: 'https://github.com/nandkumarcoder/nand-kumar-portfolio',
+    githubUrl: 'https://github.com/nandkumarcoder/custom-crm-leads-sync',
+    demoUrl: 'https://github.com/nandkumarcoder/custom-crm-leads-sync',
     icon: <RefreshCw size={16} />
   },
   {
@@ -49,7 +73,7 @@ const initialProjects = [
     tech: ['Python', 'NLTK', 'Scikit-Learn', 'Node.js'],
     image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=800',
     githubUrl: 'https://github.com/nandkumarcoder',
-    demoUrl: 'https://github.com/nandkumarcoder/nand-kumar-portfolio',
+    demoUrl: 'https://nandkumarpro.online/#projects',
     icon: <MessageSquare size={16} />
   },
   {
@@ -61,7 +85,7 @@ const initialProjects = [
     tech: ['Node.js', 'Express', 'SQLite', 'JWT Auth'],
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800',
     githubUrl: 'https://github.com/nandkumarcoder',
-    demoUrl: 'https://github.com/nandkumarcoder/nand-kumar-portfolio',
+    demoUrl: 'https://nandkumarpro.online/#projects',
     icon: <Newspaper size={16} />
   },
   {
@@ -73,7 +97,7 @@ const initialProjects = [
     tech: ['Zoho Creator', 'Deluge SQL', 'Zoho Analytics'],
     image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=800',
     githubUrl: 'https://github.com/nandkumarcoder',
-    demoUrl: 'https://github.com/nandkumarcoder/nand-kumar-portfolio',
+    demoUrl: 'https://nandkumarpro.online/#projects',
     icon: <Users size={16} />
   }
 ];

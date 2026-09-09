@@ -148,14 +148,38 @@ Try combining glassmorphic cards with animated canvas particle networks for an u
 
   projects: [
     {
+      id: 'proj-spark-fitness',
+      title: 'Spark Fitness',
+      category: 'web-nodejs',
+      categoryName: 'Web Application',
+      description: 'A dynamic, responsive fitness and workout program web application featuring interactive program navigation, workout routines, and high-energy modern visual styling.',
+      tech: ['HTML5', 'CSS3', 'JavaScript', 'Responsive UI'],
+      githubUrl: 'https://github.com/nandkumarcoder/spark-fitness',
+      demoUrl: 'https://nandkumarcoder.github.io/spark-fitness/#programs',
+      icon: 'fa-dumbbell',
+      bgType: 'blog-bg'
+    },
+    {
+      id: 'proj-aquacast',
+      title: 'AquaCast - Water App',
+      category: 'web-nodejs',
+      categoryName: 'Web Application',
+      description: 'An intelligent water monitoring and forecasting dashboard designed to track precipitation levels, monitor supply metrics, and deliver hydrological forecasts.',
+      tech: ['JavaScript', 'Weather/Water API', 'CSS Glassmorphism', 'Charts'],
+      githubUrl: 'https://github.com/nandkumarcoder/AquaCast-Water-app',
+      demoUrl: 'https://nandkumarcoder.github.io/AquaCast-Water-app/',
+      icon: 'fa-droplet',
+      bgType: 'ai-bg'
+    },
+    {
       id: 'proj-1',
       title: 'Neural Sales Forecaster',
       category: 'ai-ds',
       categoryName: 'AI & Data Science',
       description: 'An LSTM-based sales volume forecaster built to predict inventory needs using past transactional histories, resolving demand peaks with 94% accuracy.',
       tech: ['Python', 'TensorFlow', 'Pandas', 'NumPy'],
-      githubUrl: 'https://github.com/nandkumarcoder',
-      demoUrl: '#',
+      githubUrl: 'https://github.com/nandkumarcoder/neural-sales-forecaster',
+      demoUrl: 'https://github.com/nandkumarcoder/neural-sales-forecaster',
       icon: 'fa-chart-line',
       bgType: 'ai-bg'
     },
@@ -166,8 +190,8 @@ Try combining glassmorphic cards with animated canvas particle networks for an u
       categoryName: 'Node.js & Web',
       description: 'A full-featured team coordination application utilizing Node.js Express backend, PostgreSQL database, and asynchronous task notifications via JS fetch APIs.',
       tech: ['Node.js', 'Express', 'PostgreSQL', 'CSS Glassmorphism'],
-      githubUrl: 'https://github.com/nandkumarcoder',
-      demoUrl: '#',
+      githubUrl: 'https://github.com/nandkumarcoder/omnitask-kanban-board',
+      demoUrl: 'https://github.com/nandkumarcoder/omnitask-kanban-board',
       icon: 'fa-network-wired',
       bgType: 'django-bg'
     },
@@ -178,8 +202,8 @@ Try combining glassmorphic cards with animated canvas particle networks for an u
       categoryName: 'Zoho & Automation',
       description: 'A Deluge-based integration solution synchronizing external landing pages with Zoho CRM leads pipeline, triggering tailored onboarding campaigns.',
       tech: ['Zoho Creator', 'Deluge Script', 'Zoho Flows', 'REST Webhooks'],
-      githubUrl: 'https://github.com/nandkumarcoder',
-      demoUrl: '#',
+      githubUrl: 'https://github.com/nandkumarcoder/custom-crm-leads-sync',
+      demoUrl: 'https://github.com/nandkumarcoder/custom-crm-leads-sync',
       icon: 'fa-rotate',
       bgType: 'zoho-bg'
     },
