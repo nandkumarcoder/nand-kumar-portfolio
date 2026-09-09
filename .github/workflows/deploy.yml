@@ -39,6 +39,9 @@ jobs:
       - name: Create 404.html fallback
         run: cp frontend/dist/index.html frontend/dist/404.html
 
+      - name: Ensure CNAME in dist
+        run: echo "nandkumarpro.online" > frontend/dist/CNAME
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

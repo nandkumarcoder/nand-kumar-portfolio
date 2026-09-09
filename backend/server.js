@@ -8,11 +8,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Allowed origins: local dev + GitHub Pages production
+// Allowed origins: local dev + GitHub Pages production + custom domain
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:4173',
   'https://nandkumarcoder.github.io',
+  'https://nandkumarpro.online',
+  'https://www.nandkumarpro.online',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 

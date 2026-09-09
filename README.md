@@ -6,7 +6,7 @@
 
 ### **Full-Stack Developer · AI & Data Science Engineer · Node.js Expert · Zoho Automation Specialist**
 
-[![Live Portfolio](https://img.shields.io/badge/Live%20Portfolio-GitHub%20Pages-00e5ff?style=for-the-badge&logo=github)](https://nandkumarcoder.github.io/nand-kumar-portfolio/)
+[![Live Portfolio](https://img.shields.io/badge/Live%20Portfolio-nandkumarpro.online-00e5ff?style=for-the-badge&logo=google-chrome)](https://nandkumarpro.online/)
 [![Backend API](https://img.shields.io/badge/Backend%20API-Render.com-46E3B7?style=for-the-badge&logo=render)](https://nand-kumar-portfolio.onrender.com/api/health)
 [![Database](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?style=for-the-badge&logo=mongodb)](https://cloud.mongodb.com)
 [![React](https://img.shields.io/badge/Frontend-React%2018%20%2B%20Vite-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
@@ -19,7 +19,8 @@
 
 ## 🌐 Live Deployments
 
-- 💻 **Frontend Web App:** [https://nandkumarcoder.github.io/nand-kumar-portfolio/](https://nandkumarcoder.github.io/nand-kumar-portfolio/)
+- 🌐 **Custom Domain:** [https://nandkumarpro.online/](https://nandkumarpro.online/)
+- 💻 **GitHub Pages Fallback:** [https://nandkumarcoder.github.io/nand-kumar-portfolio/](https://nandkumarcoder.github.io/nand-kumar-portfolio/)
 - ⚙️ **Production REST API:** [https://nand-kumar-portfolio.onrender.com/](https://nand-kumar-portfolio.onrender.com/)
 - 🗄️ **Cloud Database:** MongoDB Atlas Cluster (`portfolio` database)
 
